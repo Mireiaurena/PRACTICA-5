@@ -61,6 +61,7 @@ Serial.println("done\n");
 delay(5000);
 }
 ```
+![image](https://github.com/user-attachments/assets/39e46041-20f1-4cad-a2b3-8c5471764ae3)
 
 ### Salida en puerto serie
 Ejemplo de salida si se encuentran dispositivos:
