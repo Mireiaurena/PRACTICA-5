@@ -10,12 +10,6 @@
 - ESP32-S3
 - Dispositivos con interfaz I2C
 - Display OLED SSD1306 (para la segunda parte)
-- Librerías necesarias:
-  ```
-  lib_deps =
-  	marcoschwartz/LiquidCrystal_I2C@^1.1.4
-  ```
-
 ---
 
 ## Parte 1: Escáner I2C
@@ -26,40 +20,45 @@ Este programa permite detectar dispositivos conectados al bus I2C en un microcon
 ```cpp
 #include <Arduino.h>
 #include <Wire.h>
-
-void setup() {
-    Wire.begin(5,6); // Pines del ESP32-S3 para I2C
-    Serial.begin(115200);
-    while (!Serial);
-    Serial.println("\nI2C Scanner");
+void setup()
+{
+Wire.begin();
+Serial.begin(115200);
+while (!Serial);
+Serial.println("\nI2C Scanner");
 }
-
-void loop() {
-    byte error, address;
-    int nDevices = 0;
-    Serial.println("Scanning...");
-    
-    for(address = 1; address < 127; address++ ) {
-        Wire.beginTransmission(address);
-        error = Wire.endTransmission();
-        
-        if (error == 0) {
-            Serial.print("I2C device found at address 0x");
-            if (address < 16) Serial.print("0");
-            Serial.print(address, HEX);
-            Serial.println(" !");
-            nDevices++;
-        } else if (error == 4) {
-            Serial.print("Unknown error at address 0x");
-            if (address < 16) Serial.print("0");
-            Serial.println(address, HEX);
-        }
-    }
-    
-    if (nDevices == 0) Serial.println("No I2C devices found\n");
-    else Serial.println("done\n");
-    
-    delay(5000); // Espera 5 segundos antes del siguiente escaneo
+void loop()
+{
+byte error, address;
+int nDevices;
+Serial.println("Scanning...");
+nDevices = 0;
+for(address = 1; address < 127; address++ )
+{
+Wire.beginTransmission(address);
+error = Wire.endTransmission();
+if (error == 0)
+{
+Serial.print("I2C device found at address 0x");
+if (address<16)
+Serial.print("0");
+Serial.print(address,HEX);
+Serial.println(" !");
+nDevices++;
+}
+else if (error==4)
+{
+Serial.print("Unknown error at address 0x");
+if (address<16)
+Serial.print("0");
+Serial.println(address,HEX);
+}
+}
+if (nDevices == 0)
+Serial.println("No I2C devices found\n");
+else
+Serial.println("done\n");
+delay(5000);
 }
 ```
 
