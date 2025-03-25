@@ -175,15 +175,55 @@ void loop() {
   delay(5000); // Esperar 5 segundos antes de hacer otro escaneo
 }
 ```
+![image](https://github.com/user-attachments/assets/1c661ddd-b572-4394-a965-50401a3f4c07)
+En la segunda parte, se adapta el escáner I2C para mostrar las direcciones en una pantalla OLED SSD1306 en vez del monitor serie, usando la librería Adafruit_SSD1306.h. La pantalla se inicializa en la dirección I2C 0x3C y muestra un mensaje de inicio. Luego, el bucle principal escanea las direcciones I2C y muestra los resultados en la OLED. Si no se detectan dispositivos, aparece el mensaje "No hay dispositivos I2C", permitiendo visualizar directamente en la pantalla los dispositivos encontrados.
 
-### Salida en display
-El mensaje mostrado en la pantalla OLED será:
+**Codigo main.cpp para que por la pantalla salga un mensaje personalizado:**
 ```
-Hello, world!
-Ywrobot Arduino!
-Arduino LCM IIC 2004
-Power By Ec-yuan!
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+#define OLED_RESET -1 // No estamos usando un pin de reset
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
+
+void setup() {
+  Serial.begin(115200);
+
+
+  // Inicializar la comunicación I2C en los pines 21 (SDA) y 20 (SCL)
+  Wire.begin(21, 20);
+  
+  // Inicializar el display con la dirección I2C 0x3C (o 0x3D dependiendo de tu pantalla)
+  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    Serial.println(F("No se pudo encontrar un display OLED"));
+    for (;;); // Detener el programa si no se encuentra el display
+  }
+
+
+  // Limpiar la pantalla
+  display.clearDisplay();
+
+
+  // Configurar el texto en la pantalla
+  display.setTextSize(2);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0, 0);
+  display.print(F("¡Daniel y Mireia!"));
+  display.display();
+}
+
+
+void loop() {
+  // Lo que quieras actualizar en la pantalla
+}
 ```
+![image](https://github.com/user-attachments/assets/c335cb54-4962-4dac-9182-07c001a919b2)
+Por ultimo en la pantalla OLED muestra un mensaje fijo de bienvenida con una fuente más grande. El código solo configura la pantalla y despliega el texto, demostrando su uso para mostrar información sin escanear dispositivos I2C.
 
 ### Diagrama de flujo
 ```mermaid
