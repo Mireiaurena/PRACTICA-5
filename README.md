@@ -103,7 +103,7 @@ Este código permite utilizar un display OLED conectado por I2C para mostrar un 
 
 ### Código
 
-```
+```cpp
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
@@ -178,8 +178,8 @@ void loop() {
 ![image](https://github.com/user-attachments/assets/1c661ddd-b572-4394-a965-50401a3f4c07)
 En la segunda parte, se adapta el escáner I2C para mostrar las direcciones en una pantalla OLED SSD1306 en vez del monitor serie, usando la librería Adafruit_SSD1306.h. La pantalla se inicializa en la dirección I2C 0x3C y muestra un mensaje de inicio. Luego, el bucle principal escanea las direcciones I2C y muestra los resultados en la OLED. Si no se detectan dispositivos, aparece el mensaje "No hay dispositivos I2C", permitiendo visualizar directamente en la pantalla los dispositivos encontrados.
 
-**Codigo main.cpp para que por la pantalla salga un mensaje personalizado:**
-```
+**Codigo para que por la pantalla salga un mensaje personalizado:**
+```cpp
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
@@ -247,7 +247,7 @@ graph LR;
 ## **Ejercicio de mejora de nota:**
 
 ### **Parte 1:**
-```
+```cpp
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
@@ -330,7 +330,7 @@ El ESP32-S3 se configura para medir la frecuencia cardíaca y SpO₂ usando un s
 
 
 ### **Parte 2:**
-```
+```cpp
 #include <WiFi.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
